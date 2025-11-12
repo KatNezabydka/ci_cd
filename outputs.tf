@@ -1,14 +1,14 @@
 #-------------Backend-----------------
 
-output "s3_bucket_name" {
-  description = "Name of the S3 bucket for storing Terraform state files"
-  value       = module.s3_backend.s3_bucket_name
-}
-
-output "dynamodb_table_name" {
-  description = "Name of the DynamoDB table for state locking"
-  value       = module.s3_backend.dynamodb_table_name
-}
+# output "s3_bucket_name" {
+#   description = "Name of the S3 bucket for storing Terraform state files"
+#   value       = module.s3_backend.s3_bucket_name
+# }
+#
+# output "dynamodb_table_name" {
+#   description = "Name of the DynamoDB table for state locking"
+#   value       = module.s3_backend.dynamodb_table_name
+# }
 
 #-------------VPC-----------------
 
@@ -47,4 +47,11 @@ output "eks_cluster_name" {
 output "eks_node_role_arn" {
   description = "IAM role ARN for EKS Worker Nodes"
   value       = module.eks.eks_node_role_arn
+}
+
+#-------------ECR-----------------
+
+output "ecr_repository_url" {
+  description = "URL of the ECR repository"
+  value       = module.ecr.repository_url
 }
