@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Django DB Test</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      async function testDB() {
+        const btn = document.getElementById("testBtn");
+        const status = document.getElementById("status");
+        btn.disabled = true;
+        status.textContent = "Testing connection...";
+
+        try {
+          const response = await fetch("/test-db");
+          if (response.ok) {
+            const data = await response.json();
+            status.textContent = data.success
+              ? "✅ Database connection successful!"
+              : "❌ Database connection failed!";
+          } else {
+            status.textContent = "❌ Error: " + response.statusText;
+          }
+        } catch (err) {
+          status.textContent = "❌ " + err.message;
+        }
+
+        btn.disabled = false;
+      }
+
+      async function getServerInfo() {
+        const infoBox = document.getElementById("serverInfo");
+        const hostnameEl = document.getElementById("hostname");
+        const timeEl = document.getElementById("serverTime");
+
+        hostnameEl.textContent = "Loading...";
+        timeEl.textContent = "Loading...";
+        infoBox.classList.remove("hidden");
+
+        try {
+          const response = await fetch("/server-info");
+          if (!response.ok) throw new Error("HTTP " + response.status);
+          const data = await response.json();
+
+          hostnameEl.textContent = data.hostname;
+          timeEl.textContent = data.server_time;
+        } catch (err) {
+          hostnameEl.textContent = "Error";
+          timeEl.textContent = err.message;
+        }
+      }
+    </script>
+  </head>
+  <body
+    class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex items-center justify-center"
+  >
+    <div
+      class="max-w-md w-full bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 text-center"
+    >
+      <h1 class="text-2xl font-semibold mb-6">Django Database Test</h1>
+
+      <button
+        id="testBtn"
+        onclick="testDB()"
+        class="px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium transition"
+      >
+        Test DB Connection
+      </button>
+      <p id="status" class="mt-6 text-sm text-gray-500 dark:text-gray-400"></p>
+
+      <h2 class="text-2xl font-semibold mb-6">Server Info</h2>
+      <button
+        class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg"
+        onclick="getServerInfo()"
+      >
+        Show Server Info
+      </button>
+
+      <div
+        id="serverInfo"
+        class="mt-4 text-sm text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg p-3 hidden"
+      >
+        <p><strong>Hostname:</strong> <span id="hostname">-</span></p>
+        <p><strong>Server Time:</strong> <span id="serverTime">-</span></p>
+      </div>
+    </div>
+  </body>
+</html>

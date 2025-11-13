@@ -1,19 +1,19 @@
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 5.0"
-    }
-  }
+# terraform {
+#   required_providers {
+#     aws = {
+#       source  = "hashicorp/aws"
+#       version = "~> 5.0"
+#     }
+#   }
+#
+#   required_version = ">= 1.6.0"
+# }
 
-  required_version = ">= 1.6.0"
-}
-
-module "s3_backend" {
-  source      = "./modules/s3-backend"
-  bucket_name = "my-avoo-bucket-terraform"
-  table_name  = "terraform-locks"
-}
+# module "s3_backend" {
+#   source      = "./modules/s3-backend"
+#   bucket_name = "my-avoo-bucket-terraform"
+#   table_name  = "terraform-locks"
+# }
 
 module "vpc" {
   source         = "./modules/vpc"
@@ -36,6 +36,6 @@ module "eks" {
   subnet_ids      = module.vpc.public_subnets
   instance_type   = "t3.micro"
   desired_size    = 2
-  max_size        = 3
-  min_size        = 1
+  max_size        = 4
+  min_size        = 2
 }

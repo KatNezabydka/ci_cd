@@ -1,23 +1,18 @@
 image:
     repository: 870140859713.dkr.ecr.us-east-1.amazonaws.com/hw-ecr
-
     tag: latest
     pullPolicy: Always
 
 service:
-    type: LoadBalancer
+    type: ClusterIP
     port: 8000
-    targetPort: 8000
 
-autoscaler:
-    enabled: true
-    minReplicas: 1
-    maxReplicas: 2
-    targetCPUUtilizationPercentage: 70
+ingress:
+    enabled: false
 
 config:
+    POSTGRES_PORT: 5432
     POSTGRES_HOST: db
-    POSTGRES_PORT: "5432"
     POSTGRES_USER: django_user
     POSTGRES_DB: django_db
     POSTGRES_PASSWORD: pass9764gd

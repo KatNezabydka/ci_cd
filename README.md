@@ -94,7 +94,7 @@ helm upgrade --install django-app ./charts/django-app -f ./charts/django-app/val
  ```
 !!! RUN on localhost:8000
 ```
-kubectl port-forward svc/django-app-django 8000:8000
+kubectl port-forward svc/django-app-django 8000:80
 ```
 
 3. Check the Pods:

@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
     name: {{ .Release.Name }}-django
 spec:
-    replicas: {{ .Values.autoscaler.minReplicas | default 2 }}
+    replicas: 1
     selector:
         matchLabels:
             app: {{ .Release.Name }}-django
@@ -13,11 +13,12 @@ spec:
                 app: {{ .Release.Name }}-django
         spec:
             containers:
-                -   name: django
-                    image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-                    imagePullPolicy: {{ .Values.image.pullPolicy }}
-                    ports:
-                        -   containerPort: {{ .Values.service.port }}
-                    envFrom:
-                        -   configMapRef:
-                                name: {{ .Release.Name }}-config
+                - name: django
+                  image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+                  imagePullPolicy: {{ .Values.image.pullPolicy }}
+                  ports:
+                      - containerPort: {{ .Values.service.port }}
+                  envFrom:
+                      - configMapRef:
+                            name: {{ .Release.Name }}-config
+

@@ -7,6 +7,6 @@ spec:
     selector:
         app: {{ .Release.Name }}-django
     ports:
-        - port: {{ .Values.service.port }}
+        - port: 80
           targetPort: {{ .Values.service.port }}
 
