@@ -24,11 +24,11 @@ module "vpc" {
   vpc_name       = "hw-vpc"
 }
 
-module "ecr" {
-  source       = "./modules/ecr"
-  ecr_name     = "hw-ecr"
-  scan_on_push = true
-}
+# module "ecr" {
+#   source       = "./modules/ecr"
+#   ecr_name     = "hw-ecr"
+#   scan_on_push = true
+# }
 
 module "eks" {
   source          = "./modules/eks"

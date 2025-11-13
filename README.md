@@ -109,5 +109,14 @@ kubectl get pods -l app=django-app-django
 kubectl get svc django-app-django
  ```
 
-The LoadBalancer service provides an external IP to access the application.
- 
+After all we can delete our cluster:
+
+ ```
+helm delete django-app
+ ```
+
+And destroy all resources:
+
+```
+terraform destroy
+ ```
