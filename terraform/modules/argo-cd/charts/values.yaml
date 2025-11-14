@@ -1,0 +1,28 @@
+applications:
+    -   name: example-app
+        namespace: default
+        project: default
+        source:
+            repoURL: <https://github.com/KatNezabydka/ci_cd.git>
+            path: django-chart
+            targetRevision: lesson-8-9-v2
+            helm:
+                valueFiles:
+                    - values.yaml
+        destination:
+            server: <https://kubernetes.default.svc>
+            namespace: default
+        syncPolicy:
+            automated:
+                prune: true
+                selfHeal: true
+
+repositories:
+    -   name: example-app
+        url: <https://github.com/KatNezabydka/ci_cd.git>
+        username: ${github_user}
+        password: ${github_pat}
+
+repoConfig:
+    insecure: "true"
+    enableLfs: "true"
