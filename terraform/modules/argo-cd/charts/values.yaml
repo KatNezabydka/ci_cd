@@ -4,7 +4,7 @@ applications:
         project: default
         source:
             repoURL: "https://github.com/KatNezabydka/ci_cd.git"
-            path: charts/django-chart
+            path: charts/django-app
             targetRevision: lesson-8-9-v2
             helm:
                 valueFiles:
