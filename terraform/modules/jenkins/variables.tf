@@ -1,10 +1,10 @@
-variable "kubeconfig" {
-  description = "Шлях до kubeconfig файлу"
-  type        = string
-}
+# variable "kubeconfig" {
+#   description = "Path to kubeconfig file"
+#   type        = string
+# }
 
 variable "cluster_name" {
-  description = "Назва Kubernetes кластера"
+  description = "Name of Kubernetes cluster"
   type        = string
 }
 

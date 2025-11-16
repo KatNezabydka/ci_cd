@@ -1,15 +1,3 @@
-resource "helm_release" "jenkins" {
-  name             = "jenkins"
-  namespace        = "jenkins"
-  repository       = "https://charts.jenkins.io"
-  chart            = "jenkins"
-  version          = "5.0.16"
-  create_namespace = true
-
-  values = [
-    file("${path.module}/values.yaml")
-  ]
-}
 resource "kubernetes_storage_class_v1" "ebs_sc" {
   metadata {
     name = "ebs-sc"
@@ -26,10 +14,6 @@ resource "kubernetes_storage_class_v1" "ebs_sc" {
   parameters = {
     type = "gp3"
   }
-
-  depends_on = [
-    helm_release.jenkins
-  ]
 }
 
 resource "kubernetes_service_account" "jenkins_sa" {
@@ -90,4 +74,19 @@ resource "aws_iam_role_policy" "jenkins_ecr_policy" {
     ]
   })
 }
+
+resource "helm_release" "jenkins" {
+  name             = "jenkins"
+  namespace        = "jenkins"
+  repository       = "https://charts.jenkins.io"
+  chart            = "jenkins"
+  version          = "5.8.27"
+  create_namespace = true
+
+  values = [
+    file("${path.module}/values.yaml")
+  ]
+
+}
+
 

@@ -70,12 +70,14 @@ docker tag hw-ecr:latest {host}/hw-ecr:latest
 ```
 docker push {host}/hw-ecr:latest
 ```
+
 ## Build Docker Image and Push to ECR (if you have macOS)
+
 ```
 docker buildx build --platform linux/amd64 -t {host}/hw-ecr:latest --push .
 ```
-## Deploy Django with Helm
 
+## Deploy Django with Helm
 
 1. Install the Helm chart:
 
@@ -88,11 +90,15 @@ helm install django-app ./charts/django-app
  ```
 helm upgrade django-app ./charts/django-app
 ```
- !!! For upgrade the Helm chart with the correct name:
+
+!!! For upgrade the Helm chart with the correct name:
+
 ```
 helm upgrade --install django-app ./charts/django-app -f ./charts/django-app/values.yaml
  ```
+
 !!! RUN on localhost:8000
+
 ```
 kubectl port-forward svc/django-app-django 8000:80
 ```
@@ -120,3 +126,37 @@ And destroy all resources:
 ```
 terraform destroy
  ```
+
+# EKS
+
+For EKS cluster we need to get kubeconfig file
+
+`aws eks --region eu-central-1 update-kubeconfig --name eks-lesson8-9-cluster`
+
+Check if it is working:
+
+`kubectl get nodes`
+
+After this we can comment our providers in main.tf file
+and use the local config:
+
+```hcl
+provider "kubernetes" {
+  config_path = "~/.kube/config"
+}
+
+provider "helm" {
+  kubernetes = {
+    config_path = "~/.kube/config"
+  }
+}
+```
+
+# Jenkins
+
+Jenkins we autoconfigure using the JCasC
+
+# ArgoCD
+
+ArgoCD we autoconfigure using the helm chart
+In the argocd module we provide values.yaml file with the values for the chart to add application automatically

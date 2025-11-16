@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+
+{{- with index .Values.applications 0 }}
+metadata:
+  name: "{{ .name }}"
+  namespace: argocd
+spec:
+  project: "{{ .project }}"
+  source:
+    repoURL: "{{ .source.repoURL }}"
+    path: "{{ .source.path }}"
+    targetRevision: "{{ .source.targetRevision }}"
+  destination:
+    server: "{{ .destination.server }}"
+    namespace: "{{ .destination.namespace }}"
+  syncPolicy:
+    automated:
+      prune: {{ .syncPolicy.automated.prune }}
+      selfHeal: {{ .syncPolicy.automated.selfHeal }}
+{{- end }}

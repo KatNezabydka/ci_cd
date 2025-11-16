@@ -17,15 +17,20 @@ spec:
         - sleep
       args:
         - 99d
+    - name: git
+      image: alpine/git
+      command:
+        - sleep
+      args:
+        - 99d
 """
     }
   }
 
   environment {
-    ECR_REGISTRY = "870140859713.dkr.ecr.us-east-1.amazonaws.com/hw-ecr"
+    ECR_REGISTRY = "870140859713.dkr.ecr.us-east-1.amazonaws.com"
     IMAGE_NAME   = "hw-ecr"
-    IMAGE_TAG    = "latest"
-
+    IMAGE_TAG    = "v1.0.${BUILD_NUMBER}"
     COMMIT_EMAIL = "jenkins@localhost"
     COMMIT_NAME  = "jenkins"
   }
@@ -46,28 +51,34 @@ spec:
         }
       }
     }
-
     stage('Update Chart Tag in Git') {
-          steps {
-            container('git') {
-              withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                sh '''
-                  git clone https://$USERNAME:$PASSWORD@https://github.com/KatNezabydka/ci_cd.git
-                  cd ci_cd
-                  git checkout lesson-8-9-v2
-                  cd charts/django-app
+      steps {
+        container('git') {
+          withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PAT')]) {
+            sh '''
+              git config --global --add safe.directory '*'
+              git clone https://$GIT_USERNAME:$GIT_PAT@github.com/KatNezabydka/ci_cd.git
+              git checkout lesson-8-9-v2
 
-                  sed -i "s/tag: .*/tag: $IMAGE_TAG/" values.yaml
+              git remote set-url origin https://$GIT_USERNAME:$GIT_PAT@github.com/KatNezabydka/ci_cd.git
 
-                  git config user.email "$COMMIT_EMAIL"
-                  git config user.name "$COMMIT_NAME"
 
-                  git add values.yaml
-                  git commit -m "Update image tag to $IMAGE_TAG"
-                  git push origin lesson-8-9-v2
-                '''
-              }
-            }
+              echo "--- LISTING REPO CONTENT ---"
+              ls -R charts
+              echo "----------------------------"
+
+              cd charts/django-app
+
+              sed -i "s/tag: .*/tag: $IMAGE_TAG/" values.yaml
+              sed -i "s|repository: .*|repository: $ECR_REGISTRY/$IMAGE_NAME|" values.yaml
+
+              git config user.email "$COMMIT_EMAIL"
+              git config user.name "$COMMIT_NAME"
+
+              git add values.yaml
+              git commit -m "Update image tag to $IMAGE_TAG"
+              git push origin lesson-8-9-v2
+            '''
           }
         }
       }

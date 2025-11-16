@@ -49,6 +49,13 @@ output "eks_node_role_arn" {
   value       = module.eks.eks_node_role_arn
 }
 
+output "eks_endpoint" {
+  value = data.aws_eks_cluster.eks.endpoint
+}
+
+output "eks_ca" {
+  value = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
+}
 #-------------Jenkins-----------------
 
 output "jenkins_release" {
