@@ -38,6 +38,7 @@ controller:
         create: false
 
     JCasC:
+        defaultConfig: true
         configScripts:
             credentials: |
                 credentials:
@@ -48,26 +49,26 @@ controller:
                               scope: GLOBAL
                               id: github-token
                               username: KatNezabydka
-                              password: 
+                              password:
                               description: GitHub PAT
-        job-config: |
-            jobs:
-              - script: |
-                  folder('jcasc')
-            
-              - script: |
-                  pipelineJob("jcasc/goit-django-docker") {
-                    definition {
-                      cpsScm {
-                        scm {
-                          git {
-                            remote {
-                              url("https://github.com/KatNezabydka/ci_cd.git")
+            job-config: |
+                jobs:
+                  - script: |
+                      folder('jcasc')
+                
+                  - script: |
+                      pipelineJob("jcasc/goit-django-docker") {
+                        definition {
+                          cpsScm {
+                            scm {
+                              git {
+                                remote {
+                                  url("https://github.com/KatNezabydka/ci_cd.git")
+                                }
+                                branches("*/lesson-8-9-v2")
+                              }
                             }
-                            branches("*/lesson-8-9-v2")
+                            scriptPath("django/Jenkinsfile")
                           }
                         }
-                        scriptPath("django/Jenkinsfile")
                       }
-                    }
-                  }

@@ -1,6 +1,6 @@
-# 🚀 CI/CD for Django on EKS with Helm
+# 🚀 CI/CD for Django on EKS with Jenkins and Argo
 
-This project demonstrates how to deploy a Django application on AWS EKS using Terraform, Docker, ECR, and Helm.
+This project demonstrates how to deploy a Django application on AWS EKS using Terraform, Docker, ECR, Jenkins and Argo
 
 ---
 
@@ -12,120 +12,34 @@ This project demonstrates how to deploy a Django application on AWS EKS using Te
 cd terraform
 ```
 
-2. Initialize Terraform:
+2. Terraform:
 
 ```
 terraform init
-```
-
-3. Preview the deployment plan:
-
-```
 terraform plan
-```
-
-4. Apply the Terraform configuration:
-
-```
 terraform apply
-```
-
-5. Destroy terraform:
-
-```
 terraform destroy
 ```
 
-6. Configure your kubeconfig for access:
+3. Configure your kubeconfig for access:
 
 ```
 aws eks --region us-east-1 update-kubeconfig --name eks-cluster-avoo
+
 kubectl get nodes
 ```
 
 If nodes show Ready, your cluster is ready.
 
-## Build Docker Image and Push to ECR
+## Build Docker Image and Push to ECR (Mac vertion)
 
 1. Authenticate Docker with AWS ECR:
 
 ```
 aws ecr get-login-password --region {region} | docker login --username AWS --password-stdin {host}
+
+docker buildx build --platform linux/amd64 -t {host}/hw-ecr:{version} --push .
 ```
-
-2. Build your Docker image:
-
-```
-docker build -t hw-ecr .
-```
-
-3. Tag your image so you can push the image to this repository:
-
-```
-docker tag hw-ecr:latest {host}/hw-ecr:latest
-```
-
-4. Run the following command to push this image to your newly created AWS repository:
-
-```
-docker push {host}/hw-ecr:latest
-```
-
-## Build Docker Image and Push to ECR (if you have macOS)
-
-```
-docker buildx build --platform linux/amd64 -t {host}/hw-ecr:latest --push .
-```
-
-## Deploy Django with Helm
-
-1. Install the Helm chart:
-
- ```
-helm install django-app ./charts/django-app
-```
-
-2. Upgrade the Helm chart:
-
- ```
-helm upgrade django-app ./charts/django-app
-```
-
-!!! For upgrade the Helm chart with the correct name:
-
-```
-helm upgrade --install django-app ./charts/django-app -f ./charts/django-app/values.yaml
- ```
-
-!!! RUN on localhost:8000
-
-```
-kubectl port-forward svc/django-app-django 8000:80
-```
-
-3. Check the Pods:
-
- ```
-kubectl get pods -l app=django-app-django
- ```
-
-4. Check the Service:
-
- ```
-kubectl get svc django-app-django
- ```
-
-After all we can delete our cluster:
-
- ```
-helm delete django-app
- ```
-
-And destroy all resources:
-
-```
-terraform destroy
- ```
 
 # EKS
 
@@ -152,9 +66,14 @@ provider "helm" {
 }
 ```
 
-# Jenkins
+# Jenkins and ArgoCD
 
-Jenkins we autoconfigure using the JCasC
+Get a password from argo
+```
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+```
+
+# General
 If you need to do some changes
 ```
 helm uninstall jenkins -n jenkins
@@ -164,9 +83,9 @@ helm uninstall argo-cd-apps -n argocd
 ```
 terraform apply
 ```
+![app](./images/app.png)
 
+![jenkins](./images/jenkins_dashbord.png)
+![jenkins](./images/jenkins_job.png)
 
-# ArgoCD
-
-ArgoCD we autoconfigure using the helm chart
-In the argocd module we provide values.yaml file with the values for the chart to add application automatically
+![argoo](./images/argo.png)
