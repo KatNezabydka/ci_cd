@@ -1,8 +1,8 @@
-# module "s3_backend" {
-#   source      = "./modules/s3-backend"
-#   bucket_name = "my-avoo-bucket-terraform"
-#   table_name  = "terraform-locks"
-# }
+module "s3_backend" {
+  source      = "./modules/s3-backend"
+  bucket_name = "my-avoo-bucket-terraform"
+  table_name  = "terraform-locks"
+}
 
 module "vpc" {
   source         = "./modules/vpc"
@@ -13,11 +13,11 @@ module "vpc" {
   vpc_name       = "hw-vpc"
 }
 
-# module "ecr" {
-#   source       = "./modules/ecr"
-#   ecr_name     = "hw-ecr"
-#   scan_on_push = true
-# }
+module "ecr" {
+  source       = "./modules/ecr"
+  ecr_name     = "hw-ecr"
+  scan_on_push = true
+}
 
 module "eks" {
   source        = "./modules/eks"
@@ -39,31 +39,30 @@ data "aws_eks_cluster_auth" "eks" {
   depends_on = [module.eks]
 }
 
-# provider "kubernetes" {
-#   alias = "eks"
-#   host  = data.aws_eks_cluster.eks.endpoint
-#   cluster_ca_certificate = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
-#   token = data.aws_eks_cluster_auth.eks.token
-# }
-#
-# provider "helm" {
-#   kubernetes = {
-#     host  = data.aws_eks_cluster.eks.endpoint
-#     cluster_ca_certificate = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
-#     token = data.aws_eks_cluster_auth.eks.token
-#   }
-# }
-
-
 provider "kubernetes" {
-  config_path = "~/.kube/config"
+  alias = "eks"
+  host  = data.aws_eks_cluster.eks.endpoint
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
+  token = data.aws_eks_cluster_auth.eks.token
 }
 
 provider "helm" {
   kubernetes = {
-    config_path = "~/.kube/config"
+    host  = data.aws_eks_cluster.eks.endpoint
+    cluster_ca_certificate = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
+    token = data.aws_eks_cluster_auth.eks.token
   }
 }
+
+# provider "kubernetes" {
+#   config_path = "~/.kube/config"
+# }
+#
+# provider "helm" {
+#   kubernetes = {
+#     config_path = "~/.kube/config"
+#   }
+# }
 
 module "jenkins" {
   source       = "./modules/jenkins"
