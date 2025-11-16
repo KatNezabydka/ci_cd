@@ -23,3 +23,8 @@ variable "vpc_name" {
   type        = string
 }
 
+variable "name" {
+  description = "Name"
+  type        = string
+}
+

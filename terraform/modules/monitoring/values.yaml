@@ -1,0 +1,11 @@
+prometheus:
+    prometheusSpec:
+        storageSpec:
+            volumeClaimTemplate:
+                spec:
+                    resources:
+                        requests:
+                            storage: 10Gi
+grafana:
+    adminUser: admin
+    adminPassword: "SuperSecurePass123"
