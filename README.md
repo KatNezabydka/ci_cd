@@ -39,7 +39,7 @@ terraform destroy
 6. Configure your kubeconfig for access:
 
 ```
-aws eks --region {region} update-kubeconfig --name {cluster-name}
+aws eks --region us-east-1 update-kubeconfig --name eks-cluster-avoo
 kubectl get nodes
 ```
 
@@ -131,7 +131,7 @@ terraform destroy
 
 For EKS cluster we need to get kubeconfig file
 
-`aws eks --region eu-central-1 update-kubeconfig --name eks-lesson8-9-cluster`
+`aws eks --region eu-central-1 update-kubeconfig --name eks-cluster-avoo`
 
 Check if it is working:
 
@@ -155,6 +155,16 @@ provider "helm" {
 # Jenkins
 
 Jenkins we autoconfigure using the JCasC
+If you need to do some changes
+```
+helm uninstall jenkins -n jenkins
+helm uninstall argo-cd -n argocd
+helm uninstall argo-cd-apps -n argocd
+```
+```
+terraform apply
+```
+
 
 # ArgoCD
 

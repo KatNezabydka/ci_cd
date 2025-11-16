@@ -48,7 +48,7 @@ controller:
                               scope: GLOBAL
                               id: github-token
                               username: KatNezabydka
-                              password:
+                              password: 
                               description: GitHub PAT
         job-config: |
             jobs:
