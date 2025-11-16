@@ -91,5 +91,6 @@ terraform apply
 ![argoo](./images/argo.png)
 
 # RDS and Grafana
+For changing type db chdnge variable in main module: use_aurora=true
 ![rds](./images/rds.png)
 ![grafana](./images/grafana.png)
