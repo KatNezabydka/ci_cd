@@ -1,6 +1,6 @@
 image:
     repository: 870140859713.dkr.ecr.us-east-1.amazonaws.com/hw-ecr
-    tag: v1.0.1
+    tag: v1.0.3
     pullPolicy: Always
 
 service:
