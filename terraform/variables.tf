@@ -70,23 +70,7 @@ variable "rds_instance_parameter_group_family" {
   type        = string
   default     = "postgres17"
 }
-#
-# variable "github_pat" {
-#   description = "GitHub Personal Access Token"
-#   type        = string
-# }
-# variable "github_user" {
-#   description = "GitHub username"
-#   type        = string
-# }
-# variable "github_repo_url" {
-#   description = "GitHub repository name"
-#   type        = string
-# }
-# variable "github_branch" {
-#   description = "GitHub branch for Jenkins"
-#   type        = string
-# }
+
 variable "name" {
   description = "Name"
   type        = string

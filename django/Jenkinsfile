@@ -28,7 +28,7 @@ spec:
   }
 
   environment {
-    ECR_REGISTRY = "870140859713.dkr.ecr.us-east-1.amazonaws.com"
+    ECR_REGISTRY = "870140859713.dkr.ecr.us-east-1.amazonaws.com/hw-ecr"
     IMAGE_NAME   = "hw-ecr"
     IMAGE_TAG    = "v1.0.${BUILD_NUMBER}"
     COMMIT_EMAIL = "jenkins@localhost"

@@ -9,7 +9,7 @@ variable "cluster_name" {
 }
 
 variable "oidc_provider_arn" {
-  description = "ARN of the OIDC provider"
+  description = "OIDC Provider ARN"
   type        = string
 }
 

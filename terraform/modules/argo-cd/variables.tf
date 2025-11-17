@@ -11,7 +11,7 @@ variable "namespace" {
 }
 
 variable "chart_version" {
-  description = "Version of Argo CD chart"
+  description = "Argo CD Helm chart version"
   type        = string
   default     = "5.46.4"
 }
