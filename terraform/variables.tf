@@ -33,13 +33,7 @@ variable "rds_instance_class" {
   description = "Instance class for the RDS database"
   type        = string
   default     = "db.t3.micro"
-  # default     = "db.t4g.medium"
 }
-# variable "rds_backup_retention_period" {
-#   description = "Backup retention period for the RDS database"
-#   type        = number
-#   default     = 1
-# }
 variable "rds_aurora_engine" {
   description = "Engine for Aurora RDS"
   type        = string
@@ -76,8 +70,3 @@ variable "name" {
   type        = string
   default     = "avoo"
 }
-
-# variable "vpc_cidr_block" {
-#   description = "CIDR for VPC"
-#   type        = string
-# }

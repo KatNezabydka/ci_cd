@@ -65,7 +65,7 @@ controller:
                                 remote {
                                   url("https://github.com/KatNezabydka/ci_cd.git")
                                 }
-                                branches("*/lesson-8-9-v2")
+                                branches("*/final-project")
                               }
                             }
                             scriptPath("django/Jenkinsfile")

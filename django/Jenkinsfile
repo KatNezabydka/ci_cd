@@ -58,7 +58,7 @@ spec:
             sh '''
               git config --global --add safe.directory '*'
               git clone https://$GIT_USERNAME:$GIT_PAT@github.com/KatNezabydka/ci_cd.git
-              git checkout lesson-8-9-v2
+              git checkout final-project
 
               git remote set-url origin https://$GIT_USERNAME:$GIT_PAT@github.com/KatNezabydka/ci_cd.git
 
@@ -77,7 +77,7 @@ spec:
 
               git add values.yaml
               git commit -m "Update image tag to $IMAGE_TAG"
-              git push origin lesson-8-9-v2
+              git push origin final-project
             '''
           }
         }

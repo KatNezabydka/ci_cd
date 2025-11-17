@@ -5,7 +5,7 @@ applications:
         source:
             repoURL: "https://github.com/KatNezabydka/ci_cd.git"
             path: charts/django-app
-            targetRevision: lesson-8-9-v2
+            targetRevision: final-project
             helm:
                 valueFiles:
                     - values.yaml
