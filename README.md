@@ -94,3 +94,4 @@ terraform apply
 For changing type db chdnge variable in main module: use_aurora=true
 ![rds](./images/rds.png)
 ![grafana](./images/grafana.png)
+![img.png](images/monitoring.png)
